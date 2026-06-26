@@ -1,0 +1,53 @@
+class Monster:
+    def __init__(self, name, hp, dmg):
+        self.name = name
+        self.hp = hp
+        self.dmg = dmg
+
+class Zombie(Monster):
+    def __init__(self, name):
+        super().__init__(name, hp=120, dmg=10)
+
+    def take_damage(self, damage):
+        self.hp -= damage
+        print(f"Зомби теряет конечность! Получено: {damage}. HP: {self.hp}")
+
+class Weapon:
+    def __init__(self, name):
+        self.name = name
+
+    def use(self, monster):
+        print(f"{self.name} что-то делает с {monster.name}")
+
+class SilverSword(Weapon):
+    def __init__(self):
+        self.name = "Серебряный меч"
+        self.dmg = 30
+
+    def use(self, monster):
+        print(f"{self.name} наносит урон {monster.name}!")
+        monster.take_damage(self.dmg)
+
+class HolyWater(Weapon):
+    def __init__(self):
+        self.name = "Святая вода"
+        self.dmg = 20
+
+    def use(self, monster):
+        print(f"{self.name} наносит урон {monster.name}!")
+        monster.take_damage(self.dmg)
+
+class CrossbowBolt(Weapon):
+    def __init__(self):
+        self.name = "Арбалет с болтом"
+        self.dmg = 25
+
+    def use(self, monster):
+        print(f"{self.name} наносит урон {monster.name}!")
+        monster.take_damage(self.dmg)
+
+weapons = [SilverSword(), HolyWater(), CrossbowBolt()]
+zombie = Zombie("Зомби")
+for w in weapons:
+    w.use(zombie)
+# Полиморфизм: один цикл — три разных удара!
