@@ -1,0 +1,73 @@
+import random
+
+class Monster:
+    def __init__(self, name, hp, dmg):
+        self.name = name
+        self.hp = hp
+        self.dmg = dmg
+
+    def take_damage(self, damage):
+        self.hp -= damage
+        print(f"Монстр получает урон! Получено: {damage}. HP: {self.hp}")
+
+    def attack_hunter(self, hunter):
+        hunter.hp -= self.dmg
+        print(f"{self.name} атакует {hunter.name}а на {self.dmg}! HP {hunter.name}а: {hunter.hp}")
+
+
+class Zombie(Monster):
+    def __init__(self, name):
+        super().__init__(name, hp=120, dmg=10)
+
+    def take_damage(self, damage):
+        self.hp -= damage
+        print(f"Зомби теряет конечность! Получено: {damage}. HP: {self.hp}")
+
+class Vampire(Monster):
+    def __init__(self, name):
+        super().__init__(name, hp=80, dmg=15)
+
+    def take_damage(self, damage):
+        self.hp -= damage - 5
+        print(f"Дракула поглощает 5 урона! Получено: {damage - 5}. HP: {self.hp}")
+
+class Ghost(Monster):
+    def __init__(self, name):
+        super().__init__(name, hp=60, dmg=20)
+
+    def take_damage(self, damage):
+        if random.random() < 0.3:
+            print(f"Призрак уклонился! Получено: 0. HP: {self.hp}")
+        else:
+            self.hp -= damage
+            print(f"Призрак получает урон! Получено: {damege}. HP: {self.hp}")
+
+class Werewolf(Monster):
+    def __init__(self, name):
+        super().__init__(name, hp=100, dmg=25)
+        self.__form = "Человек"
+
+    def take_damage(self, damage):
+        self.hp -= damage
+        if self.hp < 50:
+            self.__form = "Волк"
+            print(f"Оборотень получил урон и превратился в {self.__form}а! Получено: {damage}. HP: {self.hp}")
+        else:
+            print(f"Оборотень получил урон! Получено: {damage}. HP: {self.hp}")
+
+class Hunter:
+    def __init__(self, name):
+        self.name = name
+        self.hp = 16
+        self.dmg = 1
+
+v = Vampire("Дракула")
+v.take_damage(30)
+# Дракула поглощает 5 урона! Получено: 25. HP: 55
+
+z = Zombie("Зомби")
+z.take_damage(30)
+# Зомби теряет конечность! Получено: 30. HP: 90
+
+hunter = Hunter("Охотник")
+v.attack_hunter(hunter)
